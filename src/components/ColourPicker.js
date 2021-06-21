@@ -6,10 +6,21 @@ const ColourPicker = ({ setColorWidth }) => {
   useEffect(() => {
     setColorWidth(color);
   }, [color]);
-  return (
+
+  return window.innerWidth < 550 ? (
     <ColorPicker
-      width={200} //{456}
-      height={100} //{228}
+      width={window.innerWidth * 0.073 * 2.5}
+      height={window.innerHeight * 0.1}
+      color={color}
+      onChange={setColor}
+      hideHSB
+      hideHEX
+      dark
+    />
+  ) : (
+    <ColorPicker
+      width={window.innerWidth * 0.073 * 2}
+      height={window.innerWidth * 0.073 * 2}
       color={color}
       onChange={setColor}
       hideHSB

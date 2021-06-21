@@ -25,6 +25,7 @@ function App() {
     rgb: {},
   });
   const [width, setWidth] = useState(1);
+  const [shapeWidth, setShapeWidth] = useState(1);
   const [popped, setPopped] = useState(false);
 
   useEffect(() => {
@@ -68,7 +69,7 @@ function App() {
 
     if (path !== undefined) drawpath();
 
-    context.lineWidth = width;
+    context.lineWidth = shapeWidth;
 
     elements.forEach(({ roughElement }) => {
       context.globalAlpha = "1";
@@ -161,7 +162,7 @@ function App() {
       }
     } else if (toolType === "eraser") {
       setAction("erasing");
-      //console.log("erasing........");
+
       checkPresent(clientX, clientY);
     } else {
       const id = elements.length;
@@ -180,8 +181,7 @@ function App() {
           transparency,
         };
         setPoints((state) => [...state, newEle]);
-        //console.log("pencil/brush down");
-        //context.globalAlpha = transparency;
+
         context.strokeStyle = newColour;
         context.lineWidth = newLinewidth;
         context.lineCap = 5;
@@ -190,6 +190,7 @@ function App() {
       } else {
         setAction("drawing");
         const newColour = colorWidth.hex;
+        const newWidth = shapeWidth;
         const element = createElement(
           id,
           clientX,
@@ -197,11 +198,10 @@ function App() {
           clientX,
           clientY,
           toolType,
-          width,
+          newWidth,
           newColour
         );
-        console.log("DOWN");
-        console.log(element);
+
         setElements((prevState) => [...prevState, element]);
         setSelectedElement(element);
       }
@@ -222,24 +222,22 @@ function App() {
       checkPresent(clientX, clientY);
     }
     if (action === "sketching") {
-      //console.log("move");
       if (!isDrawing) return;
       const colour = points[points.length - 1].newColour;
       const linewidth = points[points.length - 1].newLinewidth;
       const transparency = points[points.length - 1].transparency;
       const newEle = { clientX, clientY, colour, linewidth, transparency };
-      //console.log(clientX, clientY);
+
       setPoints((state) => [...state, newEle]);
       var midPoint = midPointBtw(clientX, clientY);
       context.quadraticCurveTo(clientX, clientY, midPoint.x, midPoint.y);
       context.lineTo(clientX, clientY);
       context.stroke();
     } else if (action === "drawing") {
-      console.log("MOVING DRAWING");
-
       const index = elements.length - 1;
       const { x1, y1 } = elements[index];
       elements[index].strokeColor = colorWidth.hex;
+      elements[index].strokeWidth = shapeWidth;
       updateElement(
         index,
         x1,
@@ -247,15 +245,22 @@ function App() {
         clientX,
         clientY,
         toolType,
-        width,
+        shapeWidth,
         colorWidth.hex
       );
-      console.log(elements[index]);
-      //console.log(elements[index].strokeColor);
     } else if (action === "moving") {
-      console.log("MOVING  MOVING");
-      const { id, x1, x2, y1, y2, type, offsetX, offsetY, width, strokeColor } =
-        selectedElement;
+      const {
+        id,
+        x1,
+        x2,
+        y1,
+        y2,
+        type,
+        offsetX,
+        offsetY,
+        shapeWidth,
+        strokeColor,
+      } = selectedElement;
       const offsetWidth = x2 - x1;
       const offsetHeight = y2 - y1;
       const newX = clientX - offsetX;
@@ -267,7 +272,7 @@ function App() {
         newX + offsetWidth,
         newY + offsetHeight,
         type,
-        width,
+        shapeWidth,
         strokeColor
       );
     } else if (action === "resize") {
@@ -278,22 +283,21 @@ function App() {
         position,
         coordinates
       );
-      updateElement(id, x1, y1, x2, y2, type, width, colorWidth.hex);
+      updateElement(id, x1, y1, x2, y2, type, shapeWidth, colorWidth.hex);
     }
   };
   const handleMouseUp = () => {
     if (action === "resize") {
       const index = selectedElement.id;
-      const { id, type, width, strokeColor } = elements[index];
+      const { id, type, strokeWidth, strokeColor } = elements[index];
       const { x1, y1, x2, y2 } = adjustElementCoordinates(elements[index]);
-      updateElement(id, x1, y1, x2, y2, type, width, strokeColor);
+      updateElement(id, x1, y1, x2, y2, type, strokeWidth, strokeColor);
     } else if (action === "drawing") {
       const index = selectedElement.id;
-      const { id, type } = elements[index];
+      const { id, type, strokeWidth } = elements[index];
       const { x1, y1, x2, y2 } = adjustElementCoordinates(elements[index]);
-      updateElement(id, x1, y1, x2, y2, type, width, colorWidth.hex);
+      updateElement(id, x1, y1, x2, y2, type, strokeWidth, colorWidth.hex);
     } else if (action === "sketching") {
-      //console.log("up");
       const canvas = document.getElementById("canvas");
       const context = canvas.getContext("2d");
       context.closePath();
@@ -316,6 +320,7 @@ function App() {
         setColorWidth={setColorWidth}
         setPath={setPath}
         colorWidth={colorWidth}
+        setShapeWidth={setShapeWidth}
       />
       <canvas
         id="canvas"

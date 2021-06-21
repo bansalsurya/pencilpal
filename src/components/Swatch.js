@@ -26,6 +26,7 @@ export default function Swatch({
   setColorWidth,
   setPath,
   colorWidth,
+  setShapeWidth,
 }) {
   const [displayStroke, setDisplayStroke] = useState(false);
 
@@ -42,7 +43,7 @@ export default function Swatch({
       if (width < 15) setWidth((prev) => prev + 3);
     }
     if (toolType === ("triangle" || "rectangle" || "circle")) {
-      if (width < 15) setWidth((prev) => prev + 3);
+      if (width < 15) setShapeWidth((prev) => prev + 3);
     }
   };
   const decreaseWidth = () => {
@@ -53,7 +54,7 @@ export default function Swatch({
       if (width > 1) setWidth((prev) => prev - 3);
     }
     if (toolType === ("triangle" || "rectangle" || "circle")) {
-      if (width < 15) setWidth((prev) => prev + 3);
+      if (width > 1) setShapeWidth((prev) => prev - 3);
     }
   };
   return (
@@ -64,9 +65,12 @@ export default function Swatch({
           style={{
             position: "absolute",
             backgroundColor: "#f0f0f0",
-            height: `${window.innerHeight * 0.65}px`,
-            left: " 0px",
-            top: `${window.innerHeight * 0.15}px`,
+            height: `${window.innerHeight * 0.09 * 8}px`,
+            width: `${window.innerWidth * 0.073 * 1.8}px`,
+            left: "2px",
+            top: `${
+              (window.innerHeight - window.innerHeight * 0.09 * 8) / 2
+            }px`,
             borderRadius: "10px",
           }}
         >
@@ -76,7 +80,10 @@ export default function Swatch({
             data-placement="top"
             title="Selection"
             style={styles.righticons}
-            onClick={() => setToolType("selection")}
+            onClick={() => {
+              setToolType("selection");
+              setShapeWidth(1);
+            }}
           >
             <Resize toolType={toolType} colorWidth={colorWidth} />
           </button>
@@ -89,6 +96,7 @@ export default function Swatch({
             onClick={() => {
               setToolType("line");
               setWidth(1);
+              setShapeWidth(1);
             }}
           >
             <Line toolType={toolType} colorWidth={colorWidth} />
@@ -103,6 +111,7 @@ export default function Swatch({
             onClick={() => {
               setToolType("rectangle");
               setWidth(1);
+              setShapeWidth(1);
             }}
           >
             <Rectangle toolType={toolType} colorWidth={colorWidth} />
@@ -117,6 +126,7 @@ export default function Swatch({
             onClick={() => {
               setToolType("circle");
               setWidth(1);
+              setShapeWidth(1);
             }}
           >
             <Circle toolType={toolType} colorWidth={colorWidth} />
@@ -131,6 +141,7 @@ export default function Swatch({
             onClick={() => {
               setToolType("triangle");
               setWidth(1);
+              setShapeWidth(1);
             }}
           >
             <Triangle toolType={toolType} colorWidth={colorWidth} />
@@ -145,6 +156,7 @@ export default function Swatch({
             onClick={() => {
               setToolType("pencil");
               setWidth(1);
+              setShapeWidth(1);
             }}
           >
             <Pencil toolType={toolType} colorWidth={colorWidth} />
@@ -159,6 +171,7 @@ export default function Swatch({
             onClick={() => {
               setToolType("brush");
               setWidth(10);
+              setShapeWidth(1);
             }}
           >
             <Brush toolType={toolType} colorWidth={colorWidth} />
@@ -173,6 +186,7 @@ export default function Swatch({
             onClick={() => {
               setToolType("eraser");
               setWidth(10);
+              setShapeWidth(1);
             }}
           >
             <Eraser toolType={toolType} colorWidth={colorWidth} />
@@ -185,9 +199,14 @@ export default function Swatch({
             style={{
               position: "absolute",
               backgroundColor: "#f0f0f0",
-              width: `${window.innerWidth * 0.35}px`,
-              height: `${window.innerHeight * 0.101}px`,
-              right: "15px",
+              width:
+                window.innerWidth <= 1024
+                  ? `${window.innerWidth * 0.073 * 5.6}px`
+                  : `${window.innerWidth * 0.073 * 4.79}px`,
+              height: `${window.innerHeight * 0.1}px`,
+              right: `${
+                (window.innerWidth - window.innerWidth * 0.073 * 4.8) / 20
+              }px`,
               top: "0px",
               borderRadius: "10px",
             }}
@@ -242,7 +261,7 @@ export default function Swatch({
           </div>
           <div
             className="row"
-            style={{ position: "absolute", right: "0px", top: "0px"}}
+            style={{ position: "absolute", right: "0px", top: "0px" }}
           >
             {displayStroke && (
               <div className="col-md-3">

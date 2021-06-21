@@ -3,8 +3,8 @@ import React from "react";
 export function Resize({ toolType, colorWidth }) {
   return (
     <svg
-      width="50%"
-      height="50%"
+      width="40%"
+      height="40%"
       viewBox="0 0 51 51"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
@@ -20,8 +20,8 @@ export function Resize({ toolType, colorWidth }) {
 export function Line({ toolType, colorWidth }) {
   return (
     <svg
-      width="37%"
-      height="37%"
+      width="40%"
+      height="40%"
       viewBox="0 0 40 54"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
@@ -40,8 +40,8 @@ export function Line({ toolType, colorWidth }) {
 export function Circle({ toolType, colorWidth }) {
   return (
     <svg
-      width="50%"
-      height="50%"
+      width="40%"
+      height="40%"
       viewBox="0 0 54 54"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
@@ -56,8 +56,8 @@ export function Circle({ toolType, colorWidth }) {
 export function Rectangle({ toolType, colorWidth }) {
   return (
     <svg
-      width="55%"
-      height="55%"
+      width="35%"
+      height="35%"
       viewBox="0 0 53 40"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
@@ -72,8 +72,8 @@ export function Rectangle({ toolType, colorWidth }) {
 export function Triangle({ toolType, colorWidth }) {
   return (
     <svg
-      width="50%"
-      height="50%"
+      width="40%"
+      height="40%"
       viewBox="0 0 54 53"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
@@ -88,8 +88,8 @@ export function Triangle({ toolType, colorWidth }) {
 export function Brush({ toolType, colorWidth }) {
   return (
     <svg
-      width="54%"
-      height="54%"
+      width="40%"
+      height="40%"
       viewBox="0 0 51 47"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
@@ -108,9 +108,9 @@ export function Brush({ toolType, colorWidth }) {
 export function Pencil({ toolType, colorWidth }) {
   return (
     <svg
-      width="11%"
-      height="11%"
-      viewBox="0 0 11 55"
+      width={window.innerWidth <= 1024 ? "29%" : "50%"}
+      height={window.innerWidth <= 1024 ? "29%" : "50%"}
+      viewBox="0 0 11 54"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
@@ -157,8 +157,8 @@ export function Fill({ toolType, colorWidth }) {
 export function Reset() {
   return (
     <svg
-      width="50%"
-      height="50%"
+      width="40%"
+      height="40%"
       viewBox="0 0 47 47"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
@@ -176,8 +176,8 @@ export function Reset() {
 export function Eraser({ toolType, colorWidth }) {
   return (
     <svg
-      width="50%"
-      height="50%"
+      width="40%"
+      height="40%"
       viewBox="0 0 45 46"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
@@ -193,8 +193,8 @@ export function Eraser({ toolType, colorWidth }) {
 export function Download() {
   return (
     <svg
-      width="50%"
-      height="50%"
+      width="40%"
+      height="40%"
       viewBox="0 0 45 45"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
@@ -231,8 +231,8 @@ export function Minus() {
 export function Plus() {
   return (
     <svg
-      width="35%"
-      height="35%"
+      width="30%"
+      height="30%"
       viewBox="0 0 37 37"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
